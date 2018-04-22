@@ -1,0 +1,76 @@
+.btn {
+  &_menu {
+    &-slider {
+      position        : absolute;
+      cursor          : pointer;
+      top             : 0;
+      left            : 0;
+      right           : 0;
+      bottom          : 0;
+      background-color: #ccc;
+      transition      : 0.4s;
+
+      &:before {
+        position        : absolute;
+        content         : "";
+        height          : 26px;
+        width           : 26px;
+        left            : 4px;
+        bottom          : 4px;
+        background-color: white;
+        transition      : 0.4s;
+      }
+    }
+
+    &-onOff {
+      position: relative;
+      display : inline-block;
+      width   : 60px;
+      height  : 34px;
+
+      &-slider {
+        &:checked + .btn_menu-slider {
+          background-color: #2196F3;
+        }
+
+        &:focus + .btn_menu-slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        &:checked + .btn_menu-slider:before {
+          transform: translateX(26px);
+        }
+      }
+
+      & input {
+        display: none;
+      }
+    }
+  }
+
+  &_play {
+    width : 175px;
+    height: 175px;
+
+    &-green {
+      background : green;
+      grid-column: 2 / span 1;
+    }
+
+    &-red {
+      background: red;
+      grid-row  : 2 / span 1;
+    }
+
+    &-yellow {
+      background : yellow;
+      grid-row   : 2 / span 1;
+      grid-column: 3 / span 1;
+    }
+
+    &-blue {
+      background : blue;
+      grid-column: 2 / span 1;
+    }
+  }
+}

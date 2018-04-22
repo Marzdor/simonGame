@@ -1,0 +1,57 @@
+.container {
+  width                : 60%;
+  margin               : 0 auto;
+  display              : grid;
+  grid-template-columns: 175px 175px 175px;
+  justify-content      : center;
+
+  &_menu {
+    width                : 175px;
+    height               : 175px;
+    grid-row             : 2 / span 1;
+    display              : grid;
+    grid-template-columns: repeat(4,1fr);
+    justify-content      : center;
+
+    & h2 {
+      margin      : 10px 0 0;
+      grid-column : 2 / span 2;
+      justify-self: center;
+    }
+
+    & h4 {
+      margin      : 0;
+      font-size   : 1.5rem;
+      grid-row    : 2 / span 1;
+      grid-column : 2 /span 2;
+      justify-self: center;
+    }
+
+    & label {
+      margin      : 10px 0 0;
+      grid-row    : 4 / span 1;
+      grid-column : 3 / span 1;
+      justify-self: center;
+    }
+
+    & p {
+      margin      : 0;
+      grid-row    : 4 / span 1;
+      grid-column : 2 / span 1;
+      justify-self: center;
+      align-self  : center;
+      font-size   : 1.125rem;
+      font-weight : bold;
+    }
+
+    & #start {
+      grid-row   : 3 / span 1;
+      grid-column: 2 / span 1;
+    }
+
+    & #strict {
+      grid-row   : 3 / span 1;
+      grid-column: 3 / span 1;
+    }
+  }
+}
