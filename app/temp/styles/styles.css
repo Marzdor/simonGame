@@ -373,19 +373,43 @@ a {
 .btn_menu-slider:before {
         position        : absolute;
         content         : "";
-        height          : 26px;
-        width           : 26px;
+        height          : 20px;
+        width           : 20px;
         left            : 4px;
         bottom          : 4px;
         background-color: white;
         transition      : 0.4s;
       }
 
+.btn_menu-strict {
+      position: relative;
+      display : inline-block;
+      width   : 60px;
+      height  : 28px;
+    }
+
+.btn_menu-strict-slider:checked + .btn_menu-slider {
+          background-color: #2196F3;
+        }
+
+.btn_menu-strict-slider:focus + .btn_menu-slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+.btn_menu-strict-slider:checked + .btn_menu-slider:before {
+          -webkit-transform: translateX(26px);
+                  transform: translateX(26px);
+        }
+
+.btn_menu-strict input {
+        display: none;
+      }
+
 .btn_menu-onOff {
       position: relative;
       display : inline-block;
       width   : 60px;
-      height  : 34px;
+      height  : 28px;
     }
 
 .btn_menu-onOff-slider:checked + .btn_menu-slider {
@@ -445,6 +469,7 @@ a {
     grid-row             : 2 / span 1;
     display              : grid;
     grid-template-columns: repeat(4,1fr);
+    grid-gap             : 1px;
     justify-content      : center;
   }
 
@@ -471,20 +496,34 @@ a {
 
 .container_menu p {
       margin      : 0;
-      grid-row    : 4 / span 1;
-      grid-column : 2 / span 1;
       justify-self: center;
       align-self  : center;
       font-size   : 1.125rem;
       font-weight : bold;
     }
 
-.container_menu #start {
+.container_menu #startBtn {
       grid-row   : 3 / span 1;
-      grid-column: 2 / span 1;
+      grid-column: 2 / span 2;
     }
 
 .container_menu #strict {
-      grid-row   : 3 / span 1;
+      grid-row   : 4 / span 1;
+      grid-column: 2 / span 1;
+    }
+
+.container_menu #strictBtn {
+      grid-row   : 4 / span 1;
+      grid-column: 3 / span 1;
+    }
+
+.container_menu #power {
+      grid-row   : 5 / span 1;
+      grid-column: 2 / span 1;
+    }
+
+.container_menu #powerBtn {
+      margin     : 0;
+      grid-row   : 5 / span 1;
       grid-column: 3 / span 1;
     }

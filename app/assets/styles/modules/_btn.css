@@ -13,8 +13,8 @@
       &:before {
         position        : absolute;
         content         : "";
-        height          : 26px;
-        width           : 26px;
+        height          : 20px;
+        width           : 20px;
         left            : 4px;
         bottom          : 4px;
         background-color: white;
@@ -22,11 +22,36 @@
       }
     }
 
+    &-strict {
+      position: relative;
+      display : inline-block;
+      width   : 60px;
+      height  : 28px;
+
+      &-slider {
+        &:checked + .btn_menu-slider {
+          background-color: #2196F3;
+        }
+
+        &:focus + .btn_menu-slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        &:checked + .btn_menu-slider:before {
+          transform: translateX(26px);
+        }
+      }
+
+      & input {
+        display: none;
+      }
+    }
+
     &-onOff {
       position: relative;
       display : inline-block;
       width   : 60px;
-      height  : 34px;
+      height  : 28px;
 
       &-slider {
         &:checked + .btn_menu-slider {
