@@ -78,23 +78,23 @@
     height: 175px;
 
     &-green {
-      background : green;
+      background : $greenBtn;
       grid-column: 2 / span 1;
     }
 
     &-red {
-      background: red;
+      background: $redBtn;
       grid-row  : 2 / span 1;
     }
 
     &-yellow {
-      background : yellow;
+      background : $yellowBtn;
       grid-row   : 2 / span 1;
       grid-column: 3 / span 1;
     }
 
     &-blue {
-      background : blue;
+      background : $blueBtn;
       grid-column: 2 / span 1;
     }
   }

@@ -435,23 +435,23 @@ a {
   }
 
 .btn_play-green {
-      background : green;
+      background : #00a74a;
       grid-column: 2 / span 1;
     }
 
 .btn_play-red {
-      background: red;
+      background: #9f0f17;
       grid-row  : 2 / span 1;
     }
 
 .btn_play-yellow {
-      background : yellow;
+      background : #fcd000;
       grid-row   : 2 / span 1;
       grid-column: 3 / span 1;
     }
 
 .btn_play-blue {
-      background : blue;
+      background : #094a8f;
       grid-column: 2 / span 1;
     }
 
