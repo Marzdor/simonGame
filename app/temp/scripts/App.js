@@ -147,7 +147,10 @@ function game() {
           break;
       }
       playSequence();
-      GAMEDATA.state = 1;
+
+      setTimeout(function () {
+        GAMEDATA.state = 1;
+      }, 1000 * GAMEDATA.sequence.length + 1);
     }
   }
 }
@@ -164,14 +167,19 @@ function getPlayerInput() {
     COLORDATA[btnColor].sound.play();
 
     setTimeout(function () {
-      console.log((0, _jquery2.default)(this));
       $btnPressed.toggleClass(className);
     }, 100);
 
     if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
       GAMEDATA.state = 0;
-      //// TODO: check sequence here
-      game();
+
+      GAMEDATA.playerSequence.unshift("tempFix");
+      var pass = compareSequences();
+      if (pass) {
+        game();
+      } else {
+        // TODO: add function to deal with incorrect sequence
+      }
     }
   }
 }
@@ -190,6 +198,17 @@ function playSequence() {
   });
 }
 
+function compareSequences() {
+  var fail = true;
+
+  for (var i = 0; i < GAMEDATA.sequence.length; i++) {
+    if (GAMEDATA.sequence[i] !== GAMEDATA.playerSequence[i]) {
+      fail = false;
+    }
+  }
+  return fail;
+}
+
 function powerOnOff() {
   if (!GAMEDATA.on) {
     var countDisplay = GAMEDATA.turns;
@@ -199,8 +218,11 @@ function powerOnOff() {
 
     (0, _jquery2.default)("#count").text(countDisplay);
     GAMEDATA.on = true;
-  } else {
+  } else if (GAMEDATA.state === 1) {
     (0, _jquery2.default)("#count").text("--");
+    GAMEDATA.sequence = ["tempFix"];
+    GAMEDATA.turns = 0;
+    GAMEDATA.state = 0;
     GAMEDATA.on = false;
   }
 }

@@ -2,6 +2,7 @@ import $ from "jquery";
 import {
   Howler
 } from 'howler';
+
 // TODO: fix tempFix
 const GAMEDATA = {
   on: false,
@@ -43,6 +44,7 @@ $(document).ready(function() {
   $(".btn_menu-onOff-slider").on("click", powerOnOff);
   $("#startBtn").on("click", game);
   $(".btn_play").on("click", getPlayerInput);
+
 });
 
 function game() {
@@ -72,7 +74,10 @@ function game() {
           break;
       }
       playSequence();
-      GAMEDATA.state = 1;
+
+      setTimeout(function() {
+        GAMEDATA.state = 1;
+      }, 1000 * GAMEDATA.sequence.length + 1);
     }
   }
 }
@@ -89,18 +94,22 @@ function getPlayerInput() {
     COLORDATA[btnColor].sound.play();
 
     setTimeout(function() {
-      console.log($(this));
       $btnPressed.toggleClass(className);
     }, 100);
 
     if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
       GAMEDATA.state = 0;
-      //// TODO: check sequence here
-      game();
+
+      GAMEDATA.playerSequence.unshift("tempFix");
+      let pass = compareSequences();
+      if (pass) {
+        game();
+      } else {
+        // TODO: add function to deal with incorrect sequence
+      }
     }
   }
 }
-
 
 function playSequence() {
   GAMEDATA.sequence.forEach((seq, index) => {
@@ -116,6 +125,17 @@ function playSequence() {
   });
 }
 
+function compareSequences() {
+  let fail = true;
+
+  for (let i = 0; i < GAMEDATA.sequence.length; i++) {
+    if (GAMEDATA.sequence[i] !== GAMEDATA.playerSequence[i]) {
+      fail = false;
+    }
+  }
+  return fail;
+}
+
 function powerOnOff() {
   if (!(GAMEDATA.on)) {
     let countDisplay = GAMEDATA.turns;
@@ -125,8 +145,11 @@ function powerOnOff() {
 
     $("#count").text(countDisplay);
     GAMEDATA.on = true;
-  } else {
+  } else if (GAMEDATA.state === 1) {
     $("#count").text("--");
+    GAMEDATA.sequence = ["tempFix"];
+    GAMEDATA.turns = 0;
+    GAMEDATA.state = 0;
     GAMEDATA.on = false;
   }
 }
