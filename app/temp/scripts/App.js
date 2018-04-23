@@ -78,58 +78,53 @@ var _howler = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// TODO: fix tempFix
 var GAMEDATA = {
   on: false,
   turns: 0,
   state: 0,
-  sequence: []
+  sequence: ["tempFix"],
+  playerSequence: []
 };
 
 var COLORDATA = {
   green: {
-    name: ".btn_play-green",
+    name: "#green",
     sound: new Howl({
       src: ["../../assets/sounds/simonSound1.mp3"]
-    }),
-    normal: "#00a74a",
-    highlight: "#08c95e"
+    })
   },
   red: {
-    name: ".btn_play-red",
+    name: "#red",
     sound: new Howl({
       src: ["../../assets/sounds/simonSound2.mp3"]
-    }),
-    normal: "#9f0f17",
-    highlight: "#e01e29"
+    })
   },
   yellow: {
-    name: ".btn_play-yellow",
+    name: "#yellow",
     sound: new Howl({
       src: ["../../assets/sounds/simonSound3.mp3"]
-    }),
-    normal: "#fcd000",
-    highlight: "#ffe154"
+    })
   },
   blue: {
-    name: ".btn_play-blue",
+    name: "#blue",
     sound: new Howl({
       src: ["../../assets/sounds/simonSound4.mp3"]
-    }),
-    normal: "#094a8f",
-    highlight: "#0c5db3"
+    })
   }
 };
 
 (0, _jquery2.default)(document).ready(function () {
   (0, _jquery2.default)(".btn_menu-onOff-slider").on("click", powerOnOff);
-  (0, _jquery2.default)("#startBtn").on("click", gameLoop);
+  (0, _jquery2.default)("#startBtn").on("click", game);
+  (0, _jquery2.default)(".btn_play").on("click", getPlayerInput);
 });
 
-function gameLoop() {
+function game() {
   if (GAMEDATA.on) {
-    for (var i = 1; i <= 5; i++) {
+    if (GAMEDATA.state === 0) {
+      GAMEDATA.playerSequence = [];
       var randomNum = Math.floor(Math.random() * 4);
-
       switch (randomNum) {
         case 0:
           GAMEDATA.sequence.push("green");
@@ -144,23 +139,43 @@ function gameLoop() {
           GAMEDATA.sequence.push("blue");
           break;
       }
-
       playSequence();
-      console.log(i);
+      GAMEDATA.state = 1;
+    }
+  }
+}
+
+function getPlayerInput() {
+  if (GAMEDATA.state === 1) {
+
+    var btnPressed = (0, _jquery2.default)(this).attr("id");
+    GAMEDATA.playerSequence.push(btnPressed);
+
+    var className = "btn_play-" + btnPressed + "-light";
+    (0, _jquery2.default)(this).toggleClass(className);
+    COLORDATA[btnPressed].sound.play();
+
+    setTimeout(function () {
+      (0, _jquery2.default)(this).toggleClass(className);
+    }, 0);
+
+    if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
+      GAMEDATA.state = 0;
+      //// TODO: check sequence here
+      game();
     }
   }
 }
 
 function playSequence() {
-  console.log(GAMEDATA.sequence);
   GAMEDATA.sequence.forEach(function (seq, index) {
     setTimeout(function () {
-      console.log(COLORDATA[seq].name);
-      (0, _jquery2.default)(COLORDATA[seq].name).css("background", COLORDATA[seq].highlight);
+      var className = "btn_play-" + seq + "-light";
+      (0, _jquery2.default)(COLORDATA[seq].name).toggleClass(className);
       COLORDATA[seq].sound.play();
 
       setTimeout(function () {
-        (0, _jquery2.default)(COLORDATA[seq].name).css("background", COLORDATA[seq].normal);
+        (0, _jquery2.default)(COLORDATA[seq].name).toggleClass(className);
       }, 100 * index + 1);
     }, 1000 * index + 1);
   });

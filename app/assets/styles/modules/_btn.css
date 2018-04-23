@@ -80,22 +80,38 @@
     &-green {
       background : $greenBtn;
       grid-column: 2 / span 1;
+
+      &-light {
+        background: $greenBtnLight;
+      }
     }
 
     &-red {
       background: $redBtn;
       grid-row  : 2 / span 1;
+
+      &-light {
+        background: $redBtnLight;
+      }
     }
 
     &-yellow {
       background : $yellowBtn;
       grid-row   : 2 / span 1;
       grid-column: 3 / span 1;
+
+      &-light {
+        background: $yellowBtnLight;
+      }
     }
 
     &-blue {
       background : $blueBtn;
       grid-column: 2 / span 1;
+
+      &-light {
+        background: $blueBtnLight;
+      }
     }
   }
 }
