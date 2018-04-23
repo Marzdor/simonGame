@@ -1,10 +1,49 @@
 import $ from "jquery";
+import {
+  Howler
+} from 'howler';
 const GAMEDATA = {
   on: false,
   turns: 0,
   state: 0,
   sequence: []
 };
+
+const COLORDATA = {
+  green: {
+    name: ".btn_play-green",
+    sound: new Howl({
+      src: ["../../assets/sounds/simonSound1.mp3"]
+    }),
+    normal: "#00a74a",
+    highlight: "#08c95e",
+  },
+  red: {
+    name: ".btn_play-red",
+    sound: new Howl({
+      src: ["../../assets/sounds/simonSound2.mp3"]
+    }),
+    normal: "#9f0f17",
+    highlight: "#e01e29"
+  },
+  yellow: {
+    name: ".btn_play-yellow",
+    sound: new Howl({
+      src: ["../../assets/sounds/simonSound3.mp3"]
+    }),
+    normal: "#fcd000",
+    highlight: "#ffe154"
+  },
+  blue: {
+    name: ".btn_play-blue",
+    sound: new Howl({
+      src: ["../../assets/sounds/simonSound4.mp3"]
+    }),
+    normal: "#094a8f",
+    highlight: "#0c5db3"
+  }
+};
+
 
 $(document).ready(function() {
   $(".btn_menu-onOff-slider").on("click", powerOnOff);
@@ -14,77 +53,42 @@ $(document).ready(function() {
 function gameLoop() {
   if (GAMEDATA.on) {
     for (let i = 1; i <= 5; i++) {
-      updateSequence();
+      let randomNum = Math.floor(Math.random() * 4);
+
+      switch (randomNum) {
+        case 0:
+          GAMEDATA.sequence.push("green");
+          break;
+        case 1:
+          GAMEDATA.sequence.push("red");
+          break;
+        case 2:
+          GAMEDATA.sequence.push("yellow");
+          break;
+        case 3:
+          GAMEDATA.sequence.push("blue");
+          break;
+      }
+
       playSequence();
       console.log(i);
     }
   }
 }
 
-function updateSequence() {
-  let btnProperties = [];
-  let newBtn = getRandomBtn();
-
-  btnProperties.push(newBtn);
-
-  let btnColor = newBtn.slice(10, newBtn.length);
-
-  btnProperties.push(btnColor);
-
-  let btnHighlight = "";
-
-  if (btnColor === "green") {
-    btnHighlight = "#08c95e";
-    const greenAudio = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
-    btnProperties.push(btnHighlight);
-    btnProperties.push(greenAudio);
-  } else if (btnColor === "red") {
-    btnHighlight = "#e01e29";
-    const redAudio = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
-    btnProperties.push(btnHighlight);
-    btnProperties.push(redAudio);
-  } else if (btnColor === "yellow") {
-    btnHighlight = "#ffe154";
-    const yellowAudio = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
-    btnProperties.push(btnHighlight);
-    btnProperties.push(yellowAudio);
-  } else if (btnColor === "blue") {
-    btnHighlight = "#0c5db3";
-    const blueAudio = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
-    btnProperties.push(btnHighlight);
-    btnProperties.push(blueAudio);
-  }
-  GAMEDATA.sequence.push(btnProperties);
-}
-
 function playSequence() {
   console.log(GAMEDATA.sequence);
   GAMEDATA.sequence.forEach((seq, index) => {
     setTimeout(function() {
-      $(seq[0]).css("background", seq[2]);
-      seq[3].play();
-    }, 1000 * index);
-  });
-}
+      console.log(COLORDATA[seq].name);
+      $(COLORDATA[seq].name).css("background", COLORDATA[seq].highlight);
+      COLORDATA[seq].sound.play();
 
-function getRandomBtn() {
-  let randNum = Math.floor(Math.random() * 4);
-  let btn = ".btn_play-";
-  switch (randNum) {
-    case 0:
-      btn += "green";
-      break;
-    case 1:
-      btn += "red";
-      break;
-    case 2:
-      btn += "yellow";
-      break;
-    case 3:
-      btn += "blue";
-      break;
-  }
-  return btn;
+      setTimeout(function() {
+        $(COLORDATA[seq].name).css("background", COLORDATA[seq].normal);
+      }, 100 * index + 1);
+    }, 1000 * index + 1);
+  });
 }
 
 function powerOnOff() {
