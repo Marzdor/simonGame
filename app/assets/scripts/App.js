@@ -48,6 +48,13 @@ $(document).ready(function() {
 function game() {
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
+      GAMEDATA.turns++;
+      let countDisplay = GAMEDATA.turns;
+      if (GAMEDATA.turns < 10) {
+        countDisplay = "0" + GAMEDATA.turns;
+      }
+      $("#count").text(countDisplay);
+
       GAMEDATA.playerSequence = [];
       let randomNum = Math.floor(Math.random() * 4);
       switch (randomNum) {
@@ -73,16 +80,18 @@ function game() {
 function getPlayerInput() {
   if (GAMEDATA.state === 1) {
 
-    let btnPressed = $(this).attr("id");
-    GAMEDATA.playerSequence.push(btnPressed);
+    let $btnPressed = $(this);
+    let btnColor = $(this).attr("id");
+    GAMEDATA.playerSequence.push(btnColor);
 
-    let className = "btn_play-" + btnPressed + "-light";
-    $(this).toggleClass(className);
-    COLORDATA[btnPressed].sound.play();
+    let className = "btn_play-" + btnColor + "-light";
+    $btnPressed.toggleClass(className);
+    COLORDATA[btnColor].sound.play();
 
     setTimeout(function() {
-      $(this).toggleClass(className);
-    }, 0);
+      console.log($(this));
+      $btnPressed.toggleClass(className);
+    }, 100);
 
     if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
       GAMEDATA.state = 0;

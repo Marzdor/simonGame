@@ -123,6 +123,13 @@ var COLORDATA = {
 function game() {
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
+      GAMEDATA.turns++;
+      var countDisplay = GAMEDATA.turns;
+      if (GAMEDATA.turns < 10) {
+        countDisplay = "0" + GAMEDATA.turns;
+      }
+      (0, _jquery2.default)("#count").text(countDisplay);
+
       GAMEDATA.playerSequence = [];
       var randomNum = Math.floor(Math.random() * 4);
       switch (randomNum) {
@@ -148,16 +155,18 @@ function game() {
 function getPlayerInput() {
   if (GAMEDATA.state === 1) {
 
-    var btnPressed = (0, _jquery2.default)(this).attr("id");
-    GAMEDATA.playerSequence.push(btnPressed);
+    var $btnPressed = (0, _jquery2.default)(this);
+    var btnColor = (0, _jquery2.default)(this).attr("id");
+    GAMEDATA.playerSequence.push(btnColor);
 
-    var className = "btn_play-" + btnPressed + "-light";
-    (0, _jquery2.default)(this).toggleClass(className);
-    COLORDATA[btnPressed].sound.play();
+    var className = "btn_play-" + btnColor + "-light";
+    $btnPressed.toggleClass(className);
+    COLORDATA[btnColor].sound.play();
 
     setTimeout(function () {
-      (0, _jquery2.default)(this).toggleClass(className);
-    }, 0);
+      console.log((0, _jquery2.default)(this));
+      $btnPressed.toggleClass(className);
+    }, 100);
 
     if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
       GAMEDATA.state = 0;
