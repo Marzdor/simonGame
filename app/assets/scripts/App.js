@@ -51,11 +51,7 @@ function game() {
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
       GAMEDATA.turns++;
-      let countDisplay = GAMEDATA.turns;
-      if (GAMEDATA.turns < 10) {
-        countDisplay = "0" + GAMEDATA.turns;
-      }
-      $("#count").text(countDisplay);
+      setCountDisply();
 
       GAMEDATA.playerSequence = ["tempFix"];
       let randomNum = Math.floor(Math.random() * 4);
@@ -101,8 +97,12 @@ function getPlayerInput() {
     if (compareSequences()) {
       incorrectSequence();
     } else if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length) {
-      GAMEDATA.state = 0;
-      game();
+      if (GAMEDATA.sequence.length === 21) {
+        win();
+      } else {
+        GAMEDATA.state = 0;
+        game();
+      }
     }
   }
 }
@@ -132,13 +132,19 @@ function compareSequences() {
 function incorrectSequence() {
   let strict = $(".btn_menu-strict-slider").prop("checked");
   if (strict) {
-    $("#count").text("00");
-    gameReset();
-    GAMEDATA.state = 0;
-    game();
+    $("#count").text("!!");
+    setTimeout(function() {
+      gameReset();
+      setCountDisply();
+      game();
+    }, 1000);
   } else {
     GAMEDATA.playerSequence = ["tempFix"];
-    playSequence();
+    $("#count").text("!!");
+    setTimeout(function() {
+      setCountDisply();
+      playSequence();
+    }, 1000);
   }
 }
 
@@ -148,14 +154,22 @@ function gameReset() {
   GAMEDATA.state = 0;
 }
 
+function setCountDisply() {
+  let countDisplay = GAMEDATA.turns;
+  if (GAMEDATA.turns < 10) {
+    countDisplay = "0" + GAMEDATA.turns;
+  }
+  $("#count").text(countDisplay);
+}
+
+function win() {
+  // TODO: win logic
+}
+
 function powerOnOff() {
   if (!(GAMEDATA.on)) {
-    let countDisplay = GAMEDATA.turns;
-    if (GAMEDATA.turns < 10) {
-      countDisplay = "0" + GAMEDATA.turns;
-    }
+    setCountDisply();
 
-    $("#count").text(countDisplay);
     GAMEDATA.on = true;
   } else if (GAMEDATA.state === 1) {
     $("#count").text("--");
