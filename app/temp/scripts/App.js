@@ -81,8 +81,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // TODO: fix tempFix
 var GAMEDATA = {
   on: false,
+  maxTurns: 6,
   turns: 0,
   state: 0,
+  won: false,
   sequence: ["tempFix"],
   playerSequence: ["tempFix"]
 };
@@ -121,11 +123,17 @@ var COLORDATA = {
 });
 
 function game() {
+  console.log(GAMEDATA.state);
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
+      if (GAMEDATA.won) {
+        gameReset();
+        setCountDisply();
+        GAMEDATA.won = false;
+      }
       GAMEDATA.turns++;
       setCountDisply();
-
+      GAMEDATA.state = 2;
       GAMEDATA.playerSequence = ["tempFix"];
       var randomNum = Math.floor(Math.random() * 4);
       switch (randomNum) {
@@ -168,9 +176,11 @@ function getPlayerInput() {
     }, 100);
 
     if (compareSequences()) {
+      GAMEDATA.state = 0;
       incorrectSequence();
     } else if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length) {
-      if (GAMEDATA.sequence.length === 21) {
+      if (GAMEDATA.sequence.length === GAMEDATA.maxTurns) {
+        GAMEDATA.state = 0;
         win();
       } else {
         GAMEDATA.state = 0;
@@ -218,6 +228,7 @@ function incorrectSequence() {
       setCountDisply();
       playSequence();
     }, 1000);
+    GAMEDATA.state = 1;
   }
 }
 
@@ -236,18 +247,38 @@ function setCountDisply() {
 }
 
 function win() {
-  // TODO: win logic
+  (0, _jquery2.default)("#count").text("**");
+  var len = GAMEDATA.sequence.length - 1;
+  var lastOfSeq = GAMEDATA.sequence[len];
+
+  var _loop = function _loop(i) {
+    if (i > 1) {
+      setTimeout(function () {
+        var className = "btn_play-" + lastOfSeq + "-light";
+        (0, _jquery2.default)(COLORDATA[lastOfSeq].name).toggleClass(className);
+        COLORDATA[lastOfSeq].sound.play();
+
+        setTimeout(function () {
+          (0, _jquery2.default)(COLORDATA[lastOfSeq].name).toggleClass(className);
+        }, 100 * i + 1);
+      }, 500 * i + 1);
+    }
+  };
+
+  for (var i = 0; i < 5; i++) {
+    _loop(i);
+  }
+  GAMEDATA.won = true;
 }
 
 function powerOnOff() {
   if (!GAMEDATA.on) {
     setCountDisply();
-
     GAMEDATA.on = true;
-  } else if (GAMEDATA.state === 1) {
+  } else {
     (0, _jquery2.default)("#count").text("--");
-    gameReset();
     GAMEDATA.on = false;
+    gameReset();
   }
 }
 

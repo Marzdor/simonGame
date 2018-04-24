@@ -6,8 +6,10 @@ import {
 // TODO: fix tempFix
 const GAMEDATA = {
   on: false,
+  maxTurns: 6,
   turns: 0,
   state: 0,
+  won: false,
   sequence: ["tempFix"],
   playerSequence: ["tempFix"]
 };
@@ -48,11 +50,17 @@ $(document).ready(function() {
 });
 
 function game() {
+  console.log(GAMEDATA.state);
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
+      if (GAMEDATA.won) {
+        gameReset();
+        setCountDisply();
+        GAMEDATA.won = false;
+      }
       GAMEDATA.turns++;
       setCountDisply();
-
+      GAMEDATA.state = 2;
       GAMEDATA.playerSequence = ["tempFix"];
       let randomNum = Math.floor(Math.random() * 4);
       switch (randomNum) {
@@ -95,9 +103,11 @@ function getPlayerInput() {
     }, 100);
 
     if (compareSequences()) {
+      GAMEDATA.state = 0;
       incorrectSequence();
     } else if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length) {
-      if (GAMEDATA.sequence.length === 21) {
+      if (GAMEDATA.sequence.length === GAMEDATA.maxTurns) {
+        GAMEDATA.state = 0;
         win();
       } else {
         GAMEDATA.state = 0;
@@ -145,6 +155,7 @@ function incorrectSequence() {
       setCountDisply();
       playSequence();
     }, 1000);
+    GAMEDATA.state = 1;
   }
 }
 
@@ -163,17 +174,33 @@ function setCountDisply() {
 }
 
 function win() {
-  // TODO: win logic
+  $("#count").text("**");
+  let len = GAMEDATA.sequence.length - 1;
+  let lastOfSeq = GAMEDATA.sequence[len];
+  for (let i = 0; i < 5; i++) {
+    if (i > 1) {
+      setTimeout(function() {
+        let className = "btn_play-" + lastOfSeq + "-light";
+        $(COLORDATA[lastOfSeq].name).toggleClass(className);
+        COLORDATA[lastOfSeq].sound.play();
+
+        setTimeout(function() {
+          $(COLORDATA[lastOfSeq].name).toggleClass(className);
+        }, 100 * i + 1);
+      }, 500 * i + 1);
+    }
+  }
+  GAMEDATA.won = true;
 }
 
 function powerOnOff() {
   if (!(GAMEDATA.on)) {
     setCountDisply();
-
     GAMEDATA.on = true;
-  } else if (GAMEDATA.state === 1) {
+
+  } else {
     $("#count").text("--");
-    gameReset();
     GAMEDATA.on = false;
+    gameReset();
   }
 }
