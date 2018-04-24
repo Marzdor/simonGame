@@ -9,7 +9,7 @@ const GAMEDATA = {
   turns: 0,
   state: 0,
   sequence: ["tempFix"],
-  playerSequence: []
+  playerSequence: ["tempFix"]
 };
 
 const COLORDATA = {
@@ -57,7 +57,7 @@ function game() {
       }
       $("#count").text(countDisplay);
 
-      GAMEDATA.playerSequence = [];
+      GAMEDATA.playerSequence = ["tempFix"];
       let randomNum = Math.floor(Math.random() * 4);
       switch (randomNum) {
         case 0:
@@ -73,6 +73,7 @@ function game() {
           GAMEDATA.sequence.push("blue");
           break;
       }
+
       playSequence();
 
       setTimeout(function() {
@@ -97,16 +98,11 @@ function getPlayerInput() {
       $btnPressed.toggleClass(className);
     }, 100);
 
-    if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length - 1) {
+    if (compareSequences()) {
+      incorrectSequence();
+    } else if (GAMEDATA.playerSequence.length === GAMEDATA.sequence.length) {
       GAMEDATA.state = 0;
-
-      GAMEDATA.playerSequence.unshift("tempFix");
-      let pass = compareSequences();
-      if (pass) {
-        game();
-      } else {
-        // TODO: add function to deal with incorrect sequence
-      }
+      game();
     }
   }
 }
@@ -126,14 +122,30 @@ function playSequence() {
 }
 
 function compareSequences() {
-  let fail = true;
+  let len = GAMEDATA.playerSequence.length - 1;
+  let seq = GAMEDATA.sequence[len];
+  let pSeq = GAMEDATA.playerSequence[len];
 
-  for (let i = 0; i < GAMEDATA.sequence.length; i++) {
-    if (GAMEDATA.sequence[i] !== GAMEDATA.playerSequence[i]) {
-      fail = false;
-    }
+  return seq !== pSeq;
+}
+
+function incorrectSequence() {
+  let strict = $(".btn_menu-strict-slider").prop("checked");
+  if (strict) {
+    $("#count").text("00");
+    gameReset();
+    GAMEDATA.state = 0;
+    game();
+  } else {
+    GAMEDATA.playerSequence = ["tempFix"];
+    playSequence();
   }
-  return fail;
+}
+
+function gameReset() {
+  GAMEDATA.sequence = ["tempFix"];
+  GAMEDATA.turns = 0;
+  GAMEDATA.state = 0;
 }
 
 function powerOnOff() {
@@ -147,9 +159,7 @@ function powerOnOff() {
     GAMEDATA.on = true;
   } else if (GAMEDATA.state === 1) {
     $("#count").text("--");
-    GAMEDATA.sequence = ["tempFix"];
-    GAMEDATA.turns = 0;
-    GAMEDATA.state = 0;
+    gameReset();
     GAMEDATA.on = false;
   }
 }
