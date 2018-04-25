@@ -18,25 +18,25 @@ const COLORDATA = {
   green: {
     name: "#green",
     sound: new Howl({
-      src: ["../assets/sounds/simonSound1.mp3"]
+      src: ["https://raw.githubusercontent.com/Marzdor/simonGame/master/app/assets/sounds/simonSound1.mp3"]
     })
   },
   red: {
     name: "#red",
     sound: new Howl({
-      src: ["../assets/sounds/simonSound2.mp3"]
+      src: ["https://raw.githubusercontent.com/Marzdor/simonGame/master/app/assets/sounds/simonSound2.mp3"]
     })
   },
   yellow: {
     name: "#yellow",
     sound: new Howl({
-      src: ["../assets/sounds/simonSound3.mp3"]
+      src: ["https://raw.githubusercontent.com/Marzdor/simonGame/master/app/assets/sounds/simonSound3.mp3"]
     })
   },
   blue: {
     name: "#blue",
     sound: new Howl({
-      src: ["../assets/sounds/simonSound4.mp3"]
+      src: ["https://raw.githubusercontent.com/Marzdor/simonGame/master/app/assets/sounds/simonSound4.mp3"]
     })
   }
 };
