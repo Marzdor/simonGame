@@ -93,25 +93,25 @@ var COLORDATA = {
   green: {
     name: "#green",
     sound: new Howl({
-      src: ["../../assets/sounds/simonSound1.mp3"]
+      src: ["https://github.com/Marzdor/simonGame/blob/master/app/assets/sounds/simonSound1.mp3"]
     })
   },
   red: {
     name: "#red",
     sound: new Howl({
-      src: ["../../assets/sounds/simonSound2.mp3"]
+      src: ["https://github.com/Marzdor/simonGame/blob/master/app/assets/sounds/simonSound2.mp3"]
     })
   },
   yellow: {
     name: "#yellow",
     sound: new Howl({
-      src: ["../../assets/sounds/simonSound3.mp3"]
+      src: ["https://github.com/Marzdor/simonGame/blob/master/app/assets/sounds/simonSound3.mp3"]
     })
   },
   blue: {
     name: "#blue",
     sound: new Howl({
-      src: ["../../assets/sounds/simonSound4.mp3"]
+      src: ["https://github.com/Marzdor/simonGame/blob/master/app/assets/sounds/simonSound4.mp3"]
     })
   }
 };
@@ -123,7 +123,6 @@ var COLORDATA = {
 });
 
 function game() {
-  console.log(GAMEDATA.state);
   if (GAMEDATA.on) {
     if (GAMEDATA.state === 0) {
       if (GAMEDATA.won) {
