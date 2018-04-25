@@ -81,7 +81,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // TODO: fix tempFix
 var GAMEDATA = {
   on: false,
-  maxTurns: 6,
+  maxTurns: 21,
   turns: 0,
   state: 0,
   won: false,

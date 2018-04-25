@@ -6,7 +6,7 @@ import {
 // TODO: fix tempFix
 const GAMEDATA = {
   on: false,
-  maxTurns: 6,
+  maxTurns: 21,
   turns: 0,
   state: 0,
   won: false,
