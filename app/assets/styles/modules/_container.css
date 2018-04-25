@@ -1,36 +1,36 @@
 .container {
-  width                : 60%;
-  margin               : 0 auto;
+  width                : 500px;
+  height               : 500px;
+  padding-top          : 37.5px;
+  margin               : 150px auto;
+  background           : #6c6c6c;
+  border-radius        : 40%;
   display              : grid;
-  grid-template-columns: 175px 175px 175px;
+  grid-template-columns: 175px 50px 175px;
+  grid-template-rows   : 175px 75px 175px;
   justify-content      : center;
 
   &_menu {
-    width                : 175px;
-    height               : 175px;
+    width                : 400px;
+    height               : 50px;
     grid-row             : 2 / span 1;
+    grid-column          : 1 / span 3;
     display              : grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: 175px 50px 175px;
     grid-gap             : 1px;
     justify-content      : center;
+    align-self           : center;
 
     & h2 {
-      margin      : 10px 0 0;
-      grid-column : 2 / span 2;
-      justify-self: center;
-    }
-
-    & h4 {
-      margin      : 0;
       font-size   : 1.5rem;
-      grid-row    : 2 / span 1;
-      grid-column : 2 /span 2;
+      margin      : 5px 0 0;
+      grid-column : 2 / span 1;
       justify-self: center;
+      align-self  : center;
     }
 
     & label {
-      margin      : 10px 0 0;
-      grid-row    : 4 / span 1;
+      margin      : 5px 0 0;
       grid-column : 3 / span 1;
       justify-self: center;
     }
@@ -43,30 +43,62 @@
       font-weight : bold;
     }
 
-    & #startBtn {
-      grid-row   : 3 / span 1;
-      grid-column: 2 / span 2;
+    &-subL {
+      display     : grid;
+      grid-column : 1 / span 1;
+      justify-self: center;
+      align-self  : center;
+
+      & h4 {
+        margin     : 0;
+        font-size  : 1.125rem;
+        grid-column: 1 /span 1;
+        text-align : center;
+      }
+
+      & #startBtn {
+        grid-column: 1 / span 1;
+      }
     }
 
-    & #strict {
-      grid-row   : 4 / span 1;
-      grid-column: 2 / span 1;
-    }
+    &-subR {
+      display     : grid;
+      grid-column : 3 / span 1;
+      justify-self: center;
+      align-self  : center;
 
-    & #strictBtn {
-      grid-row   : 4 / span 1;
-      grid-column: 3 / span 1;
-    }
+      & #strict {
+        grid-column : 1 / span 1;
+        grid-row    : 1 / span 1;
+        font-size   : 1.125rem;
+        align-self  : center;
+        justify-self: start;
+        margin-left : 10px;
+      }
 
-    & #power {
-      grid-row   : 5 / span 1;
-      grid-column: 2 / span 1;
-    }
+      & #strictBtn {
+        grid-column : 2 / span 1;
+        grid-row    : 1 / span 1;
+        align-self  : center;
+        justify-self: start;
+      }
 
-    & #powerBtn {
-      margin     : 0;
-      grid-row   : 5 / span 1;
-      grid-column: 3 / span 1;
+      & #power {
+        grid-column : 1 / span 1;
+        grid-row    : 2 / span 1;
+        font-size   : 1.125rem;
+        align-self  : center;
+        justify-self: start;
+        margin-left : 10px;
+      }
+
+      & #powerBtn {
+        margin      : 0;
+        grid-column : 2 / span 1;
+        grid-row    : 2 / span 1;
+        align-self  : center;
+        justify-self: start;
+      }
     }
   }
 }
